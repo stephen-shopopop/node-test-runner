@@ -1,0 +1,13 @@
+{
+  "name": "test-runner",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --import ./globalHook.js --test",
+    "test:run": "node runner.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
