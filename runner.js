@@ -5,6 +5,7 @@ import  {finished} from 'node:stream';
 import { parseArgs } from 'node:util';
 import { argv } from 'node:process';
 import path from 'node:path';
+import fs from 'node:fs'
 
 /**
  * Determine reporter
@@ -72,13 +73,17 @@ const stream = run({
     concurrency: false,
     coverage: values.coverage,
     watch: values.watch,
-    setup:  () => {
-        console.log('setup');
+    setup:  async () => {
+        if(fs.existsSync(path.join(process.cwd(), 'setup.js'))){
+            await import(path.join(process.cwd(), 'setup.js')).then((x) => x.default())
+        }  
     }
 }).compose(determineReporter(values.reporter));
 
-finished(stream, () => {
-    console.log('teardown');
+finished(stream, async () => {
+    if(fs.existsSync(path.join(process.cwd(), 'teardown.js'))){
+        await import(path.join(process.cwd(), 'teardown.js')).then((x) => x.default())
+    }  
 });
 
 stream.pipe(process.stdout);
