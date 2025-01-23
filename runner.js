@@ -29,6 +29,8 @@ const help = `
         -h, --help                      Help
         --file <string>                 File name
         --watch                         Watch mode
+        --coverage                      Active coverage
+        --reporter                      Reporter (tap, junit, spec)
 `;
 
 const { values } = parseArgs({ args: argv.slice(2), strict: true, options: {
