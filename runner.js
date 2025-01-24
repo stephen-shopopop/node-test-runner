@@ -20,7 +20,7 @@ process.on('unhandledRejection', (err) => {
 
 const { values } = parseArgs({
   args: argv.slice(2),
-  strict: true,
+  allowPositionals: true,
   options: {
     concurrency: {
       type: 'string',
@@ -70,13 +70,14 @@ try {
     concurrency: Number.parseInt(values.concurrency, 10),
     coverage: values.coverage,
     watch: values.watch,
+    argv: [values['expose-gc'] === true ? '--expose-gc' : undefined].filter(Boolean),
     setup: async () => {
       // Call setUp
       if (fs.existsSync(path.join(process.cwd(), 'setup.js'))) {
         await import(path.join(process.cwd(), 'setup.js')).then((x) => x.default());
       }
     }
-  }).compose(reporters[(values.reporter ?? process.stdout.isTTY) ? 'spec' : 'tap']);
+  });
 
   // Log test failures to console
   stream.on('test:fail', (testFail) => {
@@ -94,13 +95,13 @@ try {
     process.exit = 0;
   });
 
-  stream.pipe(process.stdout);
+  stream
+    .compose(reporters[(values.reporter ?? process.stdout.isTTY) ? 'spec' : 'tap'])
+    .pipe(process.stdout);
 
   process.exit = 0;
 } catch (err) {
   console.error(err);
 
   process.exitCode = 1;
-} finally {
-  console.log('Finished');
 }

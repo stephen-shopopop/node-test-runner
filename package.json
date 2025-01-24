@@ -1,26 +1,31 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "name": "test-runner",
+  "name": "@stephen-shopopop/runner",
   "description": "node:test wrapper",
   "version": "0.1.0",
   "type": "module",
   "main": "runner.js",
   "bin": {
-    "runner": "runner.js"
+    "runner": "bin/runner"
   },
   "scripts": {
-    "test": "node runner.js",
+    "test": "npm run test:js && npm run test:typescript && npm run test:bin",
+    "test:js": "node runner.js",
+    "test:typescript": "tsc --pretty --noEmit && tsx runner.js -f *.test.ts",
+    "test:bin": "./bin/runner && ./bin/runner -f sync.test.ts",
     "lint": "biome lint .",
     "lint:fix": "biome lint --write .",
     "format": "biome format --write .",
-    "maintenance": "npm run clean && find . -name 'node_modules' -type d -prune -exec rm -rf '{}' + && npm cache clean --force",
-    "secure": "npx --yes @nodesecure/cli@2.4.0 cwd && npx @nodesecure/cli@2.4.0 open",
+    "maintenance": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' + && npm cache clean --force",
     "tarball:check": "npm pack --dry-run"
   },
   "author": "Stephen Deletang <me@stephendeletang.com>",
   "license": "ISC",
   "devDependencies": {
-    "@biomejs/biome": "1.9.4"
+    "@biomejs/biome": "1.9.4",
+    "@types/node": "^22.10.10",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
   },
   "repository": {
     "type": "git",

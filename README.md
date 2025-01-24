@@ -12,8 +12,16 @@ npm i @stephen-shopopop/runner --save-dev
 
 ## Usage
 
+For js:
+
 ```bash
 runner --coverage
+```
+
+For ts:
+
+```bash
+runner --file **/*.test.ts --coverage
 ```
 
 Runner will automatically run all tests files matching `*.test.{js|ts}`.
@@ -24,7 +32,8 @@ Runner will automatically run all tests files matching `*.test.{js|ts}`.
 * `--coverage` or `-C`, enables code coverage
 * `--watch` or `-w`, re-run tests on changes
 * `--expose-gc`, exposes the gc() function to tests
-* `--reporter` or `-r`, set up a reporter, use a colon to set a file destination. Reporter may either be a module name resolvable by standard `
+* `--reporter` or `-r`, set up a reporter`
+* `--file` or `-f`, define file to testing`
 
 ## Reporters
 
