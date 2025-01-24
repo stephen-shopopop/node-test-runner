@@ -30,5 +30,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/stephen-shopopop/node-test-runner"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
   }
 }
