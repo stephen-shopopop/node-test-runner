@@ -10,6 +10,7 @@ import { finished } from 'node:stream';
 import { run } from 'node:test';
 import reporters from 'node:test/reporters';
 import { parseArgs } from 'node:util';
+import githubReporter from '@reporters/github';
 
 // Listen unhandledRejection
 process.on('unhandledRejection', (err) => {
@@ -98,6 +99,12 @@ try {
   stream
     .compose(reporters[values.reporter ?? (process.stdout.isTTY ? 'spec' : 'tap')])
     .pipe(process.stdout);
+
+  // If we're running in a GitHub action, adds the gh reporter
+  // by default so that we can report failures to GitHub
+  if (process.env.GITHUB_ACTION) {
+    stream.compose(githubReporter).pipe(process.stdout);
+  }
 
   process.exit = 0;
 } catch (err) {

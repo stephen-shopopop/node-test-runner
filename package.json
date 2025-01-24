@@ -11,9 +11,9 @@
   "private": false,
   "scripts": {
     "test": "npm run test:js && npm run test:typescript && npm run test:bin",
-    "test:js": "node runner.js",
+    "test:js": "node runner.js -f *.test.js",
     "test:typescript": "tsc --pretty --noEmit && tsx runner.js -f *.test.ts",
-    "test:bin": "./bin/runner && ./bin/runner -f sync.test.ts",
+    "test:bin": "./bin/runner -f *.test.js && ./bin/runner -f sync.test.ts",
     "lint": "biome lint .",
     "lint:fix": "biome lint --write .",
     "format": "biome format --write .",
@@ -31,5 +31,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/stephen-shopopop/node-test-runner"
+  },
+  "dependencies": {
+    "@reporters/github": "^1.7.2"
   }
 }

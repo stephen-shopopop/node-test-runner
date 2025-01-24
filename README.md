@@ -15,7 +15,7 @@ npm i @stephen-shopopop/runner --save-dev
 For js:
 
 ```bash
-runner --coverage
+runner --file **/*.test.js --coverage
 ```
 
 For ts:
