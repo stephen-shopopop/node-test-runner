@@ -1,17 +1,29 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
   "name": "test-runner",
-  "version": "1.0.0",
+  "description": "node:test wrapper",
+  "version": "0.1.0",
   "type": "module",
-  "main": "index.js",
-  "scripts": {
-    "test": "node --import ./globalHook.js --test",
-    "test:run": "node runner.js"
+  "main": "runner.js",
+  "bin": {
+    "runner": "runner.js"
   },
-  "author": "",
+  "scripts": {
+    "test": "node runner.js",
+    "lint": "biome lint .",
+    "lint:fix": "biome lint --write .",
+    "format": "biome format --write .",
+    "maintenance": "npm run clean && find . -name 'node_modules' -type d -prune -exec rm -rf '{}' + && npm cache clean --force",
+    "secure": "npx --yes @nodesecure/cli@2.4.0 cwd && npx @nodesecure/cli@2.4.0 open",
+    "tarball:check": "npm pack --dry-run"
+  },
+  "author": "Stephen Deletang <me@stephendeletang.com>",
   "license": "ISC",
-  "description": "",
-  "engines": {
-    "node": "^22"
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stephen-shopopop/node-test-runner"
   }
 }
