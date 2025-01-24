@@ -8,6 +8,7 @@
   "bin": {
     "runner": "bin/runner"
   },
+  "private": false,
   "scripts": {
     "test": "npm run test:js && npm run test:typescript && npm run test:bin",
     "test:js": "node runner.js",
@@ -30,8 +31,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/stephen-shopopop/node-test-runner"
-  },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org"
   }
 }
