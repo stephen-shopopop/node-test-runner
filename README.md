@@ -44,6 +44,39 @@ Here are the available reporters:
 * `dot`: outputs the test results in a compact format, where each passing test is represented by a ., and each failing test is represented by a X.
 * `junit`: outputs test results in a jUnit XML format
 
+## Setup
+
+Create file  `setup.js` on `.`
+
+```js
+export default function () {
+  // ️️️✅ Best Practice: force UTC
+  process.env.TZ = 'UTC';
+
+  console.time('global-setup');
+
+  // ... Put your setup
+
+  // 👍🏼 We're ready
+  console.timeEnd('global-setup');
+}
+```
+
+## Teardown
+
+Create file  `teardown.js` on `.`
+
+```js
+export default function () {
+  console.time('global-teardown');
+
+  // ... Put your teardown
+
+  // 👍🏼 We're ready
+  console.timeEnd('global-teardown');
+}
+```
+
 ## Reference
 
 [Run node test](https://nodejs.org/api/test.html#runoptions)
