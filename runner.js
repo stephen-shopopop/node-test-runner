@@ -96,7 +96,7 @@ try {
   });
 
   stream
-    .compose(reporters[(values.reporter ?? process.stdout.isTTY) ? 'spec' : 'tap'])
+    .compose(reporters[values.reporter ?? (process.stdout.isTTY ? 'spec' : 'tap')])
     .pipe(process.stdout);
 
   process.exit = 0;
