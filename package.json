@@ -10,7 +10,7 @@
   },
   "private": false,
   "scripts": {
-    "test": "tsc --pretty --noEmit && ./bin/runner -C",
+    "test": "tsc --pretty --noEmit && ./bin/runner",
     "lint": "biome lint .",
     "lint:fix": "biome lint --write .",
     "format": "biome format --write .",

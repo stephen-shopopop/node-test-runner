@@ -1,5 +1,3 @@
-#! /usr/bin/env node
-
 import fs from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import os from 'node:os';
@@ -77,9 +75,9 @@ const args = parseArgs({
       short: 'o',
       type: 'boolean'
     },
-    kill: {
+    forceExit: {
       default: false,
-      short: 'k',
+      short: 'F',
       type: 'boolean'
     }
   }

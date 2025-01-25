@@ -32,7 +32,7 @@ Runner will automatically run all tests files matching `*.test.{js|ts}`.
 * `--coverage` or `-C`, enables code coverage
 * `--watch` or `-w`, re-run tests on changes
 * `--only` or `-o`, only run `node:test` with the `only` option set
-* `--kill` or `-k`, finished executing even if the event loop would otherwise remain active
+* `--forceExit` or `-F`, finished executing even if the event loop would otherwise remain active
 * `--expose-gc`, exposes the gc() function to tests
 * `--reporter` or `-r`, set up a reporter`
 * `--file` or `-f`, define file to testing`
