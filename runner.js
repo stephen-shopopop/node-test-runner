@@ -19,7 +19,7 @@ process.on('unhandledRejection', (err) => {
   process.exit(1);
 });
 
-const { values } = parseArgs({
+const args = parseArgs({
   args: argv.slice(2),
   allowPositionals: true,
   options: {
@@ -42,7 +42,6 @@ const { values } = parseArgs({
       type: 'boolean'
     },
     file: {
-      default: undefined,
       short: 'f',
       type: 'string',
       multiple: true
@@ -55,29 +54,71 @@ const { values } = parseArgs({
     reporter: {
       short: 'r',
       type: 'string'
+    },
+    lines: {
+      default: '100',
+      type: 'string'
+    },
+    branches: {
+      default: '100',
+      type: 'string'
+    },
+    functions: {
+      default: '100',
+      type: 'string'
+    },
+    timeout: {
+      default: '30000',
+      short: 't',
+      type: 'string'
+    },
+    only: {
+      default: false,
+      short: 'o',
+      type: 'boolean'
+    },
+    kill: {
+      default: false,
+      short: 'k',
+      type: 'boolean'
     }
   }
 });
 
-if (values?.help) {
+if (args.values?.help) {
   console.log(await readFile(new URL('./README.md', import.meta.url), 'utf8'));
 
   process.exit(0);
 }
 
 try {
+  // see https://nodejs.org/api/test.html#runoptions
   const stream = run({
-    files: values.file ? values.file.map((f) => path.resolve(f)) : undefined,
-    concurrency: Number.parseInt(values.concurrency, 10),
-    coverage: values.coverage,
-    watch: values.watch,
-    argv: [values['expose-gc'] === true ? '--expose-gc' : undefined].filter(Boolean),
+    argv: [args.values['expose-gc'] === true ? '--expose-gc' : undefined].filter(Boolean),
+    concurrency: Number.parseInt(args.values.concurrency, 10),
+    coverage: args.values.coverage,
+    files: args.values.file ? args.values.file.map((f) => path.resolve(f)) : undefined,
+    // See https://nodejs.org/api/test.html#running-tests-from-the-command-line
+    globPatterns: args.values.file
+      ? []
+      : [
+          '**/*.test.{cjs,mjs,js}',
+          '**/test/**/*.{cjs,mjs,js}',
+          '**/*.test.{cts,mts,ts}',
+          '**/test/**/*.{cts,mts,ts}'
+        ],
+    lineCoverage: Number.parseInt(args.values.lines, 10),
+    branchCoverage: Number.parseInt(args.values.branches, 10),
+    functionCoverage: Number.parseInt(args.values.functions, 10),
+    only: args.values.only,
     setup: async () => {
       // Call setUp
       if (fs.existsSync(path.join(process.cwd(), 'setup.js'))) {
         await import(path.join(process.cwd(), 'setup.js')).then((x) => x.default());
       }
-    }
+    },
+    timeout: Number.parseInt(args.values.timeout, 10),
+    watch: args.values.watch
   });
 
   // Log test failures to console
@@ -97,7 +138,7 @@ try {
   });
 
   stream
-    .compose(reporters[values.reporter ?? (process.stdout.isTTY ? 'spec' : 'tap')])
+    .compose(reporters[args.values.reporter ?? (process.stdout.isTTY ? 'spec' : 'tap')])
     .pipe(process.stdout);
 
   // If we're running in a GitHub action, adds the gh reporter
