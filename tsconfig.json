@@ -2,7 +2,6 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
     "outDir": "dist",
-    "noEmit": true,
     "sourceMap": true,
     "target": "ES2022",
     "module": "NodeNext",
@@ -17,7 +16,7 @@
     "isolatedModules": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-    "lib": ["ESNext"],
-    "incremental": true
-  }
+    "lib": ["ESNext"]
+  },
+  "exclude": ["dist", "runner.js"]
 }
