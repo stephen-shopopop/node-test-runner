@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/package.json",
   "name": "@stephen-shopopop/runner",
   "description": "node:test wrapper",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "module",
   "main": "runner.js",
   "bin": {
