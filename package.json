@@ -21,6 +21,7 @@
   "license": "ISC",
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
+    "@std/expect": "npm:@jsr/std__expect@^1.0.12",
     "@types/node": "^22.10.10",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3"
