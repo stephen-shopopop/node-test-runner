@@ -1,8 +1,6 @@
 # App data
 .docker
 
-.npmrc
-
 # Logs
 logs
 *.log
