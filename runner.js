@@ -1,3 +1,5 @@
+#!/usr/bin/env -S node
+
 import fs from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import os from 'node:os';
@@ -21,65 +23,32 @@ const args = parseArgs({
   args: argv.slice(2),
   allowPositionals: true,
   options: {
-    concurrency: {
+    concurrency: { type: 'string', short: 'c', default: `${os.availableParallelism() - 1}` },
+    'expose-gc': { type: 'boolean' },
+    watch: { short: 'w', type: 'boolean', default: false },
+    help: { short: 'h', type: 'boolean', default: false },
+    pattern: {
+      short: 'p',
       type: 'string',
-      short: 'c',
-      default: `${os.availableParallelism() - 1}`
+      multiple: true,
+      default:
+        process.env.npm_lifecycle_script === 'tsx'
+          ? [
+              '**/*.test.{cjs,mjs,js}',
+              '**/test/**/*.{cjs,mjs,js}',
+              '**/*.test.{cts,mts,ts}',
+              '**/test/**/*.{cts,mts,ts}'
+            ]
+          : ['**/*.test.{cjs,mjs,js}', '**/test/**/*.{cjs,mjs,js}']
     },
-    'expose-gc': {
-      type: 'boolean'
-    },
-    watch: {
-      default: false,
-      short: 'w',
-      type: 'boolean'
-    },
-    help: {
-      default: false,
-      short: 'h',
-      type: 'boolean'
-    },
-    file: {
-      short: 'f',
-      type: 'string',
-      multiple: true
-    },
-    coverage: {
-      default: false,
-      short: 'C',
-      type: 'boolean'
-    },
-    reporter: {
-      short: 'r',
-      type: 'string'
-    },
-    lines: {
-      default: '100',
-      type: 'string'
-    },
-    branches: {
-      default: '100',
-      type: 'string'
-    },
-    functions: {
-      default: '100',
-      type: 'string'
-    },
-    timeout: {
-      default: '30000',
-      short: 't',
-      type: 'string'
-    },
-    only: {
-      default: false,
-      short: 'o',
-      type: 'boolean'
-    },
-    forceExit: {
-      default: false,
-      short: 'F',
-      type: 'boolean'
-    }
+    coverage: { short: 'C', type: 'boolean', default: false },
+    reporter: { short: 'r', type: 'string' },
+    lines: { type: 'string', default: '100' },
+    branches: { type: 'string', default: '100' },
+    functions: { type: 'string', default: '100' },
+    timeout: { short: 't', type: 'string', default: '30000' },
+    only: { short: 'o', type: 'boolean', default: false },
+    forceExit: { short: 'F', type: 'boolean', default: false }
   }
 });
 
@@ -92,19 +61,12 @@ if (args.values?.help) {
 try {
   // see https://nodejs.org/api/test.html#runoptions
   const stream = run({
-    argv: [args.values['expose-gc'] === true ? '--expose-gc' : undefined].filter(Boolean),
+    execArgv: [args.values['expose-gc'] === true ? '--trace-gc' : undefined].filter(Boolean),
     concurrency: Number.parseInt(args.values.concurrency, 10),
     coverage: args.values.coverage,
-    files: args.values.file ? args.values.file.map((f) => path.resolve(f)) : undefined,
+    files: args.positionals.length > 0 ? args.positionals.map((f) => path.resolve(f)) : undefined,
     // See https://nodejs.org/api/test.html#running-tests-from-the-command-line
-    globPatterns: args.values.file
-      ? []
-      : [
-          '**/*.test.{cjs,mjs,js}',
-          '**/test/**/*.{cjs,mjs,js}',
-          '**/*.test.{cts,mts,ts}',
-          '**/test/**/*.{cts,mts,ts}'
-        ],
+    globPatterns: args.positionals.length > 0 ? [] : args.values.pattern,
     lineCoverage: Number.parseInt(args.values.lines, 10),
     branchCoverage: Number.parseInt(args.values.branches, 10),
     functionCoverage: Number.parseInt(args.values.functions, 10),

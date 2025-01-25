@@ -6,11 +6,11 @@
   "type": "module",
   "main": "runner.js",
   "bin": {
-    "runner": "bin/runner"
+    "runner": "runner.js"
   },
   "private": false,
   "scripts": {
-    "test": "tsc --pretty --noEmit && ./bin/runner",
+    "test": "tsc --pretty --noEmit && ./bin/runner *.test.ts *.test.js",
     "lint": "biome lint .",
     "lint:fix": "biome lint --write .",
     "format": "biome format --write .",

@@ -12,16 +12,24 @@ npm i @stephen-shopopop/runner --save-dev
 
 ## Usage
 
-For js:
+### javascript
 
 ```bash
-runner --file **/*.test.js --coverage
+runner
 ```
 
-For ts:
+Runner will automatically run all tests files matching `*.test.{js}`.
+
+### typescript
 
 ```bash
-runner --file **/*.test.ts --coverage
+npx tsx runner
+```
+
+### Run multiple specify files
+
+```bash
+runner *.test.js *.test.mjs
 ```
 
 Runner will automatically run all tests files matching `*.test.{js|ts}`.
@@ -29,14 +37,14 @@ Runner will automatically run all tests files matching `*.test.{js|ts}`.
 ## Options
 
 * `--concurrency` or `-c`, to set the number of concurrent tests. Defaults to the number of available CPUs minus one.
-* `--coverage` or `-C`, enables code coverage
-* `--watch` or `-w`, re-run tests on changes
-* `--only` or `-o`, only run `node:test` with the `only` option set
-* `--forceExit` or `-F`, finished executing even if the event loop would otherwise remain active
-* `--expose-gc`, exposes the gc() function to tests
-* `--reporter` or `-r`, set up a reporter`
-* `--file` or `-f`, define file to testing`
-* `--timeout` or `-t`, timeouts the tests after a given time. Default is 30000ms`
+* `--coverage` or `-C`, enables code coverage. Default is `false`
+* `--watch` or `-w`, re-run tests on changes. Default is `false`
+* `--only` or `-o`, only run `node:test` with the `only` option set. Default is `false`
+* `--forceExit` or `-F`, finished executing even if the event loop would otherwise remain active. Default is `false`
+* `--expose-gc`, exposes the gc() function to tests. Default is `false`
+* `--reporter` or `-r`, set up a reporter
+* `--pattern` or `-p`, run tests matching the given glob pattern. Default is `*.test.{js|ts}`
+* `--timeout` or `-t`, timeouts the tests after a given time. Default is 30000ms
 * `--lines`, set the lines threshold when check coverage is active; default is 100
 * `--functions`, set the functions threshold when check coverage is active; default is 100
 * `--branches`, set the branches threshold when check coverage is active; default is 100
