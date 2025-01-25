@@ -48,6 +48,7 @@ Runner will automatically run all tests files matching `*.test.{js|ts}`.
 * `--lines`, set the lines threshold when check coverage is active; default is 100
 * `--functions`, set the functions threshold when check coverage is active; default is 100
 * `--branches`, set the branches threshold when check coverage is active; default is 100
+* `--rootDir`, set rootDir to setup and teardown.
 
 ## Reporters
 
@@ -60,7 +61,21 @@ Here are the available reporters:
 
 ## Setup
 
-Create file  `setup.js` on `.`
+```bash
+.
+├── src
+│   └── lib
+│      ├── math.ts
+│      └── math.test.ts
+├── test <rootDir>
+│   ├── setup.js
+│   ├── teardown.js 
+│   └── components
+│       └── compute.test.ts
+└── tsconfig.json (typescript project)
+```
+
+Create file  `setup.js`
 
 ```js
 export default function () {
@@ -78,7 +93,7 @@ export default function () {
 
 ## Teardown
 
-Create file  `teardown.js` on `.`
+Create file  `teardown.js`
 
 ```js
 export default function () {

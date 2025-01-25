@@ -48,7 +48,8 @@ const args = parseArgs({
     functions: { type: 'string', default: '100' },
     timeout: { short: 't', type: 'string', default: '30000' },
     only: { short: 'o', type: 'boolean', default: false },
-    forceExit: { short: 'F', type: 'boolean', default: false }
+    forceExit: { short: 'F', type: 'boolean', default: false },
+    rootDir: { type: 'string', default: 'test' }
   }
 });
 
@@ -73,13 +74,25 @@ try {
     only: args.values.only,
     setup: async () => {
       // Call setUp
-      if (fs.existsSync(path.join(process.cwd(), 'setup.js'))) {
-        await import(path.join(process.cwd(), 'setup.js')).then((x) => x.default());
+      if (fs.existsSync(path.join(process.cwd(), args.values.rootDir, 'setup.js'))) {
+        await import(path.join(process.cwd(), args.values.rootDir, 'setup.js')).then((x) =>
+          x.default()
+        );
       }
     },
     timeout: Number.parseInt(args.values.timeout, 10),
     watch: args.values.watch
   });
+
+  for (const signal of ['SIGTERM', 'SIGINT']) {
+    process.once(signal, () => {
+      // Destroy stream to call teardown correctly
+      stream.destroy();
+
+      // Enforce exit for tsx
+      process.exit(1);
+    });
+  }
 
   // Log test failures to console
   stream.on('test:fail', (testFail) => {
@@ -90,8 +103,10 @@ try {
 
   // Call tearDown
   finished(stream, async () => {
-    if (fs.existsSync(path.join(process.cwd(), 'teardown.js'))) {
-      await import(path.join(process.cwd(), 'teardown.js')).then((x) => x.default());
+    if (fs.existsSync(path.join(process.cwd(), args.values.rootDir, 'teardown.js'))) {
+      await import(path.join(process.cwd(), args.values.rootDir, 'teardown.js')).then((x) =>
+        x.default()
+      );
     }
 
     process.exit = 0;
