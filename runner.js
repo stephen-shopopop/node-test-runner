@@ -35,11 +35,11 @@ const args = parseArgs({
         process.env.npm_lifecycle_script === 'tsx'
           ? [
               '**/*.test.{cjs,mjs,js}',
-              '**/test/**/*.{cjs,mjs,js}',
+              '**/test/**/*.test.{cjs,mjs,js}',
               '**/*.test.{cts,mts,ts}',
-              '**/test/**/*.{cts,mts,ts}'
+              '**/test/**/*.test.{cts,mts,ts}'
             ]
-          : ['**/*.test.{cjs,mjs,js}', '**/test/**/*.{cjs,mjs,js}']
+          : ['**/*.test.{cjs,mjs,js}', '**/test/**/*.test.{cjs,mjs,js}']
     },
     coverage: { short: 'C', type: 'boolean', default: false },
     reporter: { short: 'r', type: 'string', default: process.stdout.isTTY ? 'spec' : 'tap' },
@@ -65,6 +65,7 @@ try {
     execArgv: [args.values['expose-gc'] === true ? '--trace-gc' : undefined].filter(Boolean),
     concurrency: Number.parseInt(args.values.concurrency, 10),
     coverage: args.values.coverage,
+    coverageExcludeGlobs: args.values.pattern,
     files: args.positionals.length > 0 ? args.positionals.map((f) => path.resolve(f)) : undefined,
     // See https://nodejs.org/api/test.html#running-tests-from-the-command-line
     globPatterns: args.positionals.length > 0 ? [] : args.values.pattern,
