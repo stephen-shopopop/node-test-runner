@@ -29,6 +29,7 @@
     "format": "biome format --write .",
     "maintenance": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' + && npm cache clean --force",
     "tarball:check": "npm pack --dry-run",
+    "publish:dry-run": "npm publish --dry-run",
     "prepublishOnly": "npm run build"
   },
   "author": "Stephen Deletang <me@stephendeletang.com>",
@@ -47,5 +48,8 @@
   "dependencies": {
     "@reporters/github": "^1.7.2",
     "@std/expect": "npm:@jsr/std__expect@^1.0.12"
+  },
+  "imports": {
+    "#runner/*": "./dist/index.js"
   }
 }

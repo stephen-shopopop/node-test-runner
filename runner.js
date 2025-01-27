@@ -42,7 +42,7 @@ const args = parseArgs({
           : ['**/*.test.{cjs,mjs,js}', '**/test/**/*.{cjs,mjs,js}']
     },
     coverage: { short: 'C', type: 'boolean', default: false },
-    reporter: { short: 'r', type: 'string' },
+    reporter: { short: 'r', type: 'string', default: process.stdout.isTTY ? 'spec' : 'tap' },
     lines: { type: 'string', default: '100' },
     branches: { type: 'string', default: '100' },
     functions: { type: 'string', default: '100' },
@@ -112,9 +112,7 @@ try {
     process.exit = 0;
   });
 
-  stream
-    .compose(reporters[args.values.reporter ?? (process.stdout.isTTY ? 'spec' : 'tap')])
-    .pipe(process.stdout);
+  stream.compose(reporters[args.values.reporter]).pipe(process.stdout);
 
   // If we're running in a GitHub action, adds the gh reporter
   // by default so that we can report failures to GitHub
