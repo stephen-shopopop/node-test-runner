@@ -20,6 +20,8 @@
 		"eamodio.gitlens",
 		"usernamehw.errorlens",
 		"github.vscode-github-actions",
+		// Database
+    "cweijan.dbclient-jdbc",
 		// Theme
 		"chadalen.vscode-jetbrains-icon-theme",
 		"qvist.jetbrains-new-ui-dark-theme",

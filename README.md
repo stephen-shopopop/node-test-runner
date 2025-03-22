@@ -44,6 +44,7 @@ Runner will automatically run all tests files matching `*.test.{js|ts}`.
 * `--expose-gc`, exposes the gc() function to tests. Default is `false`
 * `--reporter` or `-r`, set up a reporter
 * `--pattern` or `-p`, run tests matching the given glob pattern. Default is `*.test.{js|ts}`
+* `--name`, run tests name matching the given glob pattern. Default is `undefined`. ex: `--name="#myTag"`
 * `--timeout` or `-t`, timeouts the tests after a given time. Default is 30000ms
 * `--lines`, set the lines threshold when check coverage is active; default is 100
 * `--functions`, set the functions threshold when check coverage is active; default is 100

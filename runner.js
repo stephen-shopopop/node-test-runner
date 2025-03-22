@@ -38,14 +38,17 @@ const args = parseArgs({
               '**/test/**/*.test.{cjs,mjs,js}',
               '**/*.test.{cts,mts,ts}',
               '**/test/**/*.test.{cts,mts,ts}'
-            ]
-          : ['**/*.test.{cjs,mjs,js}', '**/test/**/*.test.{cjs,mjs,js}']
+            ].map((pattern) => path.join(process.cwd(), pattern))
+          : ['**/*.test.{cjs,mjs,js}', '**/test/**/*.test.{cjs,mjs,js}'].map((pattern) =>
+              path.join(process.cwd(), pattern)
+            )
     },
     coverage: { short: 'C', type: 'boolean', default: false },
     reporter: { short: 'r', type: 'string', default: process.stdout.isTTY ? 'spec' : 'tap' },
     lines: { type: 'string', default: '100' },
     branches: { type: 'string', default: '100' },
     functions: { type: 'string', default: '100' },
+    name: { short: 'n', type: 'string', default: undefined },
     timeout: { short: 't', type: 'string', default: '30000' },
     only: { short: 'o', type: 'boolean', default: false },
     forceExit: { short: 'F', type: 'boolean', default: false },
@@ -73,6 +76,7 @@ try {
     branchCoverage: Number.parseInt(args.values.branches, 10),
     functionCoverage: Number.parseInt(args.values.functions, 10),
     only: args.values.only,
+    testNamePatterns: args.values.name,
     setup: async () => {
       // Call setUp
       if (fs.existsSync(path.join(process.cwd(), args.values.rootDir, 'setup.js'))) {

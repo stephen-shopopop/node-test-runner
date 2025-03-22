@@ -5,7 +5,7 @@ describe('Net', () => {
   describe('isPortReachable', () => {
     it('Should return server not reachable', async () => {
       // Act
-      const value = await net.isPortReachable(8080);
+      const value = await net.isPortReachable(9999);
 
       // Expect
       expect(value).toBeFalsy();
