@@ -29,7 +29,7 @@ type History = {
   response?: Mock['response'];
 };
 
-const safeJsonParse = (data: string) => {
+const safeJsonParse = (data: string): unknown => {
   try {
     return JSON.parse(data);
   } catch {
