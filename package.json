@@ -37,7 +37,7 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@types/node": "^22.14.0",
-    "pkgroll": "^2.11.2",
+    "pkgroll": "^2.14.0",
     "tsx": "^4.19.3",
     "typescript": "^5.8.3"
   },
