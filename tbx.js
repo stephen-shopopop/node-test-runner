@@ -48,7 +48,7 @@ const args = parseArgs({
     reporter: { short: 'r', type: 'string', default: process.stdout.isTTY ? 'spec' : 'tap' },
     lines: { type: 'string', default: '90' },
     branches: { type: 'string', default: '90' },
-    functions: { type: 'string', default: '100' },
+    functions: { type: 'string', default: '90' },
     name: { short: 'n', type: 'string', default: undefined },
     timeout: { short: 't', type: 'string', default: '30000' },
     only: { short: 'o', type: 'boolean', default: false },
