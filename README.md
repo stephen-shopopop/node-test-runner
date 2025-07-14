@@ -1,4 +1,4 @@
-# runner
+# tbx
 
 Runner is a wrapper test runner for `node:test`.
 
@@ -7,7 +7,7 @@ Runner is self-hosted, i.e. Runner runs its own tests.
 ## Install
 
 ```bash
-npm i @stephen-shopopop/runner --save-dev
+npm i @stephen-shopopop/tbx --save-dev
 ```
 
 ## Usage
@@ -15,7 +15,7 @@ npm i @stephen-shopopop/runner --save-dev
 ### javascript
 
 ```bash
-runner
+tbx
 ```
 
 Runner will automatically run all tests files matching `*.test.{js}`.
@@ -23,13 +23,13 @@ Runner will automatically run all tests files matching `*.test.{js}`.
 ### typescript
 
 ```bash
-npx tsx runner
+npx tsx tbx
 ```
 
 ### Run multiple specify files
 
 ```bash
-runner *.test.js *.test.mjs
+tbx *.test.js *.test.mjs
 ```
 
 Runner will automatically run all tests files matching `*.test.{js|ts}`.
@@ -79,10 +79,11 @@ Here are the available reporters:
 Create file  `setup.js`
 
 ```js
-export default function () {
-  // ️️️✅ Best Practice: force UTC
-  process.env.TZ = 'UTC';
+// ️️️✅ Best Practice: force UTC
+process.env.TZ = 'UTC';
 
+
+export default function () {
   console.time('global-setup');
 
   // ... Put your setup

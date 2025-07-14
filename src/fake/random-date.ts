@@ -11,13 +11,7 @@ function normalizeDate(date: string | Date | number): Date {
  * @param param1 date to
  * @returns
  */
-function between({
-  from,
-  to
-}: {
-  from: string | Date | number;
-  to: string | Date | number;
-}): Date {
+function between({ from, to }: { from: string | Date | number; to: string | Date | number }): Date {
   const fromInMs = normalizeDate(from).getTime();
   const toInMs = normalizeDate(to).getTime();
 
