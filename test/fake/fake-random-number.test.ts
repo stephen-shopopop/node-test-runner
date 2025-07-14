@@ -1,4 +1,5 @@
-import { describe, expect, fake, it } from '#runner';
+import { expect, fake } from '#runner';
+import { describe, it } from 'node:test';
 
 describe('Fake random number', () => {
   it('Should return number float', (t) => {

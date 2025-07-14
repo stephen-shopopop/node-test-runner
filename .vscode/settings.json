@@ -83,7 +83,10 @@
         "cjs",
         "js"
       ],
-      "parameters": []
+      "parameters": [
+        "--import",
+        "./test/setup.js", // Load env tests setup
+      ]
     },
     {
       "extensions": [

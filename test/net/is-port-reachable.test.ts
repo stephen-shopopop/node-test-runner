@@ -1,5 +1,6 @@
 import { type Server, createServer } from 'node:http';
-import { net, after, before, describe, expect, it } from '#runner';
+import { net, expect } from '#runner';
+import { after, before, describe, it } from 'node:test';
 
 describe('Net', () => {
   describe('isPortReachable', () => {

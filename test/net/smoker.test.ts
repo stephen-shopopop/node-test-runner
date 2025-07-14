@@ -1,4 +1,5 @@
-import { net, after, afterEach, describe, expect, test } from '#runner';
+import { net, expect } from '#runner';
+import test, { after, afterEach, describe } from 'node:test';
 
 describe('Net smoker #net #smoker', () => {
   describe('createWebServer is reachable', async () => {

@@ -1,4 +1,5 @@
-import { net, after, describe, expect, it, test } from '#runner';
+import { net, expect } from '#runner';
+import test, { after, describe, it } from 'node:test';
 import { buildOutgoingHttpHeaders, parseAndCoerceHeaders } from '../../src/net/web-server-http.js';
 
 describe('Net createWebServer #net #server', () => {
