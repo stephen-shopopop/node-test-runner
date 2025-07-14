@@ -51,7 +51,6 @@
     "@biomejs/biome": "2.1.1",
     "@types/node": "^24.0.13",
     "pkgroll": "^2.14.3",
-    "tsx": "^4.20.3",
     "typescript": "^5.8.3"
   },
   "simple-git-hooks": {
@@ -74,7 +73,8 @@
   },
   "dependencies": {
     "@reporters/github": "^1.7.2",
-    "@std/expect": "npm:@jsr/std__expect@^1.0.12"
+    "@std/expect": "npm:@jsr/std__expect@^1.0.12",
+    "tsx": "^4.20.3"
   },
   "imports": {
     "#runner/*": "./dist/index.js"
