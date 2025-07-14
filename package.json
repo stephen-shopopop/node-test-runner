@@ -18,7 +18,8 @@
     }
   },
   "bin": {
-    "tbx": "tbx.js"
+    "tbx": "tbx.js",
+    "tbxts": "./bin/tbx"
   },
   "private": false,
   "scripts": {

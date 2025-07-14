@@ -32,12 +32,13 @@ const args = parseArgs({
       type: 'string',
       multiple: true,
       default:
-        process.env.npm_lifecycle_script === 'tsx'
+        process.env.npm_lifecycle_script === '"tsx"'
           ? [
               '**/*.test.{cjs,mjs,js}',
               '**/test/**/*.test.{cjs,mjs,js}',
               '**/*.test.{cts,mts,ts}',
-              '**/test/**/*.test.{cts,mts,ts}'
+              '**/test/**/*.test.{cts,mts,ts}',
+              '**/**/*.test.{cts,mts,ts}'
             ].map((pattern) => path.join(process.cwd(), pattern))
           : ['**/*.test.{cjs,mjs,js}', '**/test/**/*.test.{cjs,mjs,js}'].map((pattern) =>
               path.join(process.cwd(), pattern)

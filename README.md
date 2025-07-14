@@ -23,7 +23,7 @@ Runner will automatically run all tests files matching `*.test.{js}`.
 ### typescript
 
 ```bash
-npx tsx tbx
+tbxts
 ```
 
 ### Run multiple specify files
