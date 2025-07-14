@@ -46,9 +46,9 @@ Runner will automatically run all tests files matching `*.test.{js|ts}`.
 * `--pattern` or `-p`, run tests matching the given glob pattern. Default is `*.test.{js|ts}`
 * `--name`, run tests name matching the given glob pattern. Default is `undefined`. ex: `--name="#myTag"`
 * `--timeout` or `-t`, timeouts the tests after a given time. Default is 30000ms
-* `--lines`, set the lines threshold when check coverage is active; default is 100
-* `--functions`, set the functions threshold when check coverage is active; default is 100
-* `--branches`, set the branches threshold when check coverage is active; default is 100
+* `--lines`, set the lines threshold when check coverage is active; default is 80
+* `--functions`, set the functions threshold when check coverage is active; default is 80
+* `--branches`, set the branches threshold when check coverage is active; default is 80
 * `--rootDir`, set rootDir to setup and teardown.
 
 ## Reporters
