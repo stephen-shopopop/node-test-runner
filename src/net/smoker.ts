@@ -1,15 +1,8 @@
 import { createHash } from 'node:crypto';
 import type { Server } from 'node:http';
 import type { AddressInfo } from 'node:net';
-import { closeWebServer, createWebServer } from './web-server-http.js';
-
-type Context = {
-  method: string;
-  headers: Record<string, string>;
-  path: string;
-  query: Record<string, unknown>;
-  body: unknown;
-};
+import { closeWebServer, createWebServer } from './web-server.js';
+import type { Context } from '../definitions.js';
 
 type Mock = {
   request: {
@@ -28,23 +21,6 @@ type History = {
   request: Context & { datetime: number };
   response?: Mock['response'];
 };
-
-const safeJsonParse = (data: string): unknown => {
-  try {
-    return JSON.parse(data);
-  } catch {
-    return data;
-  }
-};
-
-const buildContext = async (request: Request): Promise<Context> =>
-  Object.freeze({
-    method: request.method,
-    headers: Object.fromEntries(request.headers),
-    path: new URL(request.url).pathname,
-    query: Object.fromEntries(new URL(request.url).searchParams),
-    body: safeJsonParse(Buffer.from(await request.arrayBuffer()).toString())
-  });
 
 const buildResponse = (mock: Mock | undefined): Response => {
   if (mock) {
@@ -121,8 +97,7 @@ export class Smoker {
     return uniqueId;
   }
 
-  async #fetchCallback(request: Request): Promise<Response> {
-    const ctx = await buildContext(request);
+  async #fetchCallback(ctx: Context): Promise<Response> {
     const pattern = this.#uniqueId(`${ctx.method}:${ctx.path}`);
 
     if (this.#mock.has(pattern)) {

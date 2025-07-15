@@ -17,13 +17,9 @@
     "isolatedModules": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-    "lib": [
-      "ESNext"
-    ],
+    "lib": ["ESNext"],
     "paths": {
-      "#runner": [
-        "./src/index.ts"
-      ]
+      "#runner": ["./src/index.ts"]
     },
     "allowUnusedLabels": false,
     "allowUnreachableCode": false,
@@ -37,8 +33,5 @@
     "checkJs": false,
     "emitDeclarationOnly": true
   },
-  "exclude": [
-    "dist",
-    "bin/tbx.js"
-  ]
+  "exclude": ["dist", "bin/tbx.js"]
 }
