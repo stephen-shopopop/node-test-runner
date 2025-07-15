@@ -1,8 +1,8 @@
-import { expect, fake } from '#runner';
-import { describe, it } from 'node:test';
+import { fake } from '#runner';
+import { describe, it, type TestContext } from 'node:test';
 
 describe('Fake random number', () => {
-  it('Should return number float', (t) => {
+  it('Should return number float', (t: TestContext) => {
     // Arrange
     t.mock.method(global.Math, 'random').mock.mockImplementation(() => 0.123456789);
 
@@ -10,11 +10,11 @@ describe('Fake random number', () => {
     const value = fake.num.getRandomInRange({ fraction: 2 });
 
     // Expect
-    expect(Number(value) === value && value % 1 === 0).toBeFalsy();
-    expect(value).toBe(1235.44);
+    t.assert.equal(Number(value) === value && value % 1 === 0, false);
+    t.assert.strictEqual(value, 1235.44);
   });
 
-  it('Should return number integer', (t) => {
+  it('Should return number integer', (t: TestContext) => {
     // Arrange
     t.mock.method(global.Math, 'random').mock.mockImplementation(() => 0.123456789);
 
@@ -22,11 +22,11 @@ describe('Fake random number', () => {
     const value = fake.num.getRandomInRange();
 
     // Assert
-    expect(Number(value) === value && value % 1 === 0).toBeTruthy();
-    expect(value).toBe(1235);
+    t.assert.equal(Number(value) === value && value % 1 === 0, true);
+    t.assert.strictEqual(value, 1235);
   });
 
-  it('Should return min value, if min === max', (t) => {
+  it('Should return min value, if min === max', (t: TestContext) => {
     // Arrange
     t.mock.method(global.Math, 'random').mock.mockImplementation(() => 0.123456789);
 
@@ -34,10 +34,10 @@ describe('Fake random number', () => {
     const value = fake.num.getRandomInRange({ max: 10, min: 10 });
 
     // Assert
-    expect(value).toBe(10);
+    t.assert.strictEqual(value, 10);
   });
 
-  it('Should return error, if min > max', (t) => {
+  it('Should return error, if min > max', (t: TestContext) => {
     // Arrange
     t.mock.method(global.Math, 'random').mock.mockImplementation(() => 0.123456789);
 
@@ -45,6 +45,6 @@ describe('Fake random number', () => {
     const random = () => fake.num.getRandomInRange({ max: 10, min: 11 });
 
     // Assert
-    expect(random).toThrow('Max must be bigger than min');
+    t.assert.throws(random, new Error('Max must be bigger than min'));
   });
 });

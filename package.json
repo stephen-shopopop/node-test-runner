@@ -72,8 +72,7 @@
     "node": ">=20.17.0"
   },
   "dependencies": {
-    "@reporters/github": "^1.7.2",
-    "@std/expect": "npm:@jsr/std__expect@^1.0.12"
+    "@reporters/github": "^1.7.2"
   },
   "imports": {
     "#runner/*": "./dist/index.js"

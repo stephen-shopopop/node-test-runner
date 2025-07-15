@@ -1,8 +1,8 @@
-import { expect, fake } from '#runner';
-import { describe, it } from 'node:test';
+import { fake } from '#runner';
+import { describe, it, type TestContext } from 'node:test';
 
 describe('Fake random array', () => {
-  it('Should return first item of array', (t) => {
+  it('Should return first item of array', (t: TestContext) => {
     // Arrange
     const data = [1, 999];
 
@@ -12,6 +12,6 @@ describe('Fake random array', () => {
     const value = fake.array.getRandomFromArray(data);
 
     // Expect
-    expect(value).toBe(1);
+    t.assert.strictEqual(value, 1);
   });
 });

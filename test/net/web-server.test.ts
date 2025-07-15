@@ -1,36 +1,36 @@
-import { net, expect } from '#runner';
-import test, { after, describe, it } from 'node:test';
+import { net } from '#runner';
+import test, { after, describe, it, type TestContext } from 'node:test';
 import { buildOutgoingHttpHeaders, parseAndCoerceHeaders } from '../../src/net/web-server-http.js';
 
 describe('Net createWebServer #net #server', () => {
   describe('parseAndCoerceHeaders', () => {
-    it('Should return [] when parse header with header key = ":"', async () => {
+    it('Should return [] when parse header with header key = ":"', async (t: TestContext) => {
       // Act
       const headers = parseAndCoerceHeaders([':', 'test']);
 
       // Expect
-      expect(headers).toStrictEqual([]);
+      t.assert.deepStrictEqual(headers, []);
     });
 
-    it('Should return Headers when parse header ', async () => {
+    it('Should return Headers when parse header ', async (t: TestContext) => {
       // Act
       const headers = parseAndCoerceHeaders(['host', 'localhost:9000']);
 
       // Expect
-      expect(headers).toStrictEqual([['host', 'localhost:9000']]);
+      t.assert.deepStrictEqual(headers, [['host', 'localhost:9000']]);
     });
 
-    it('Should return [] when parse header without value', async () => {
+    it('Should return [] when parse header without value', async (t: TestContext) => {
       // Act
       const headers = parseAndCoerceHeaders(['host']);
 
       // Expect
-      expect(headers).toStrictEqual([]);
+      t.assert.deepStrictEqual(headers, []);
     });
   });
 
   describe('buildOutgoingHttpHeaders', () => {
-    it('Should outgoingHttpHeaders with content-type = text/plain; charset=UTF-8', async () => {
+    it('Should outgoingHttpHeaders with content-type = text/plain; charset=UTF-8', async (t: TestContext) => {
       // Arrange
       const headers = new Headers();
 
@@ -38,12 +38,12 @@ describe('Net createWebServer #net #server', () => {
       const outgoingHttpHeaders = buildOutgoingHttpHeaders(headers);
 
       // Expect
-      expect(outgoingHttpHeaders).toStrictEqual({
+      t.assert.deepStrictEqual(outgoingHttpHeaders, {
         'content-type': 'text/plain; charset=UTF-8'
       });
     });
 
-    it('Should outgoingHttpHeaders with content-type = text/plain; charset=UTF-8', async () => {
+    it('Should outgoingHttpHeaders with content-type = text/plain; charset=UTF-8', async (t: TestContext) => {
       // Arrange
       const headers = new Headers([['Content-Type', 'application/json']]);
 
@@ -51,14 +51,14 @@ describe('Net createWebServer #net #server', () => {
       const outgoingHttpHeaders = buildOutgoingHttpHeaders(headers);
 
       // Expect
-      expect(outgoingHttpHeaders).toStrictEqual({
+      t.assert.deepStrictEqual(outgoingHttpHeaders, {
         'content-type': 'application/json'
       });
     });
   });
 
   describe('createWebServer is reachable', () => {
-    it('Should return server is reachable', async () => {
+    it('Should return server is reachable', async (t: TestContext) => {
       after(async () => {
         // Clean state
         await server.close();
@@ -73,12 +73,12 @@ describe('Net createWebServer #net #server', () => {
       const value = await net.isPortReachable(address.port);
 
       // Expect
-      expect(value).toBeTruthy();
+      t.assert.equal(value, true);
     });
   });
 
   describe('createWebServer custom header', () => {
-    it('Should return response with custom header', async () => {
+    it('Should return response with custom header', async (t: TestContext) => {
       after(async () => {
         // Clean state
         await server.close();
@@ -99,15 +99,15 @@ describe('Net createWebServer #net #server', () => {
       const response = await fetch(`http://localhost:${address.port}`);
 
       // Expect
-      expect(response.status).toBe(200);
-      expect(response.statusText).toBe('OK');
-      expect(response.headers.get('x-time-process')).toBe('24');
-      expect(response.headers.get('Content-Type')).toBe('application/json');
+      t.assert.equal(response.status, 200);
+      t.assert.equal(response.statusText, 'OK');
+      t.assert.equal(response.headers.get('x-time-process'), '24');
+      t.assert.equal(response.headers.get('Content-Type'), 'application/json');
     });
   });
 
   describe('createWebServer response on error', () => {
-    it('Should return internal server error', async (t) => {
+    it('Should return internal server error', async (t: TestContext) => {
       after(async () => {
         // Clean state
         await server.close();
@@ -126,8 +126,8 @@ describe('Net createWebServer #net #server', () => {
       const response = await fetch(`http://localhost:${address.port}`);
 
       // Expect
-      expect(response.status).toBe(500);
-      expect(response.statusText).toBe('Internal Server Error');
+      t.assert.equal(response.status, 500);
+      t.assert.equal(response.statusText, 'Internal Server Error');
     });
   });
 
@@ -164,16 +164,16 @@ describe('Net createWebServer #net #server', () => {
       await server.close();
     });
 
-    test('When request with method GET, then Should return request.', async () => {
+    test('When request with method GET, then Should return request.', async (t: TestContext) => {
       // Act
       const response = await fetch(`http://localhost:${address.port}/api/test?message=hello`);
       const serverRequest = await response.json();
 
       // Expect
-      expect(response.status).toBe(200);
-      expect(response.statusText).toBe('OK');
-      expect(response.headers.get('content-type')).toBe('text/plain;charset=UTF-8');
-      expect(serverRequest).toStrictEqual({
+      t.assert.equal(response.status, 200);
+      t.assert.equal(response.statusText, 'OK');
+      t.assert.equal(response.headers.get('content-type'), 'text/plain;charset=UTF-8');
+      t.assert.deepStrictEqual(serverRequest, {
         method: 'GET',
         headers: {
           accept: '*/*',
@@ -190,19 +190,19 @@ describe('Net createWebServer #net #server', () => {
       });
     });
 
-    test('When request with method HEAD, then Should return request.', async () => {
+    test('When request with method HEAD, then Should return request.', async (t: TestContext) => {
       // Act
       const response = await fetch(`http://localhost:${address.port}`, {
         method: 'HEAD'
       });
 
       // Expect
-      expect(response.status).toBe(200);
-      expect(response.statusText).toBe('OK');
-      expect(response.headers.get('content-type')).toBe('text/plain;charset=UTF-8');
+      t.assert.equal(response.status, 200);
+      t.assert.equal(response.statusText, 'OK');
+      t.assert.equal(response.headers.get('content-type'), 'text/plain;charset=UTF-8');
     });
 
-    test('When request with method POST, then Should return request.', async () => {
+    test('When request with method POST, then Should return request.', async (t: TestContext) => {
       // Arrange
       const payload = { message: 'hello world!' };
 
@@ -214,10 +214,10 @@ describe('Net createWebServer #net #server', () => {
       const serverRequest = await response.json();
 
       // Expect
-      expect(response.status).toBe(200);
-      expect(response.statusText).toBe('OK');
-      expect(response.headers.get('content-type')).toBe('text/plain;charset=UTF-8');
-      expect(serverRequest).toStrictEqual({
+      t.assert.equal(response.status, 200);
+      t.assert.equal(response.statusText, 'OK');
+      t.assert.equal(response.headers.get('content-type'), 'text/plain;charset=UTF-8');
+      t.assert.deepStrictEqual(serverRequest, {
         method: 'POST',
         headers: {
           accept: '*/*',

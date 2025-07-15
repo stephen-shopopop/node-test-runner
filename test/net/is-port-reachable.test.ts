@@ -1,39 +1,37 @@
 import { type Server, createServer } from 'node:http';
-import { net, expect } from '#runner';
-import { after, before, describe, it } from 'node:test';
+import { net } from '#runner';
+import { after, before, describe, it, type TestContext } from 'node:test';
 
-describe('Net', () => {
-  describe('isPortReachable', () => {
-    it('Should return server not reachable', async () => {
-      // Act
-      const value = await net.isPortReachable(9999);
+describe('isPortReachable', () => {
+  it('Should return server not reachable', async (t: TestContext) => {
+    // Act
+    const value = await net.isPortReachable(9999);
 
-      // Expect
-      expect(value).toBeFalsy();
-    });
+    // Expect
+    t.assert.equal(value, false);
+  });
 
-    it('Should return server reachable', async () => {
-      let server: Server;
+  it('Should return server reachable', async (t: TestContext) => {
+    let server: Server;
 
-      before(() => {
-        // Place the server under test within the same process
-        server = createServer((_req, res) => {
-          res.end('Hello World!\n');
-        });
-
-        server.listen(8080, '127.0.0.1');
+    before(() => {
+      // Place the server under test within the same process
+      server = createServer((_req, res) => {
+        res.end('Hello World!\n');
       });
 
-      after(async () => {
-        // Clean state
-        await server.close();
-      });
-
-      // Act
-      const value = await net.isPortReachable(8080);
-
-      // Expect
-      expect(value).toBeTruthy();
+      server.listen(8080, '127.0.0.1');
     });
+
+    after(async () => {
+      // Clean state
+      await server.close();
+    });
+
+    // Act
+    const value = await net.isPortReachable(8080);
+
+    // Expect
+    t.assert.equal(value, true);
   });
 });

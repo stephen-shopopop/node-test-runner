@@ -1,12 +1,12 @@
-import { expect, fake } from '#runner';
-import { describe, it } from 'node:test';
+import { fake } from '#runner';
+import { describe, it, type TestContext } from 'node:test';
 
 describe('Fake random date', () => {
-  it('Should return instance of Date', () => {
+  it('Should return instance of Date', (t: TestContext) => {
     // Act
     const value = fake.date.between({ from: Date.now(), to: Date.now() });
 
     // Expect
-    expect(value).toBeInstanceOf(Date);
+    t.assert.ok(value instanceof Date);
   });
 });
