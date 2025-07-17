@@ -47,7 +47,7 @@
   ],
   "license": "ISC",
   "devDependencies": {
-    "@biomejs/biome": "2.1.1",
+    "@biomejs/biome": "2.1.2",
     "@types/node": "^24.0.13",
     "pkgroll": "^2.14.3",
     "tsx": "^4.20.3",
