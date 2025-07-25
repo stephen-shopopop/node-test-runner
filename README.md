@@ -70,7 +70,7 @@ Here are the available reporters:
 │      └── math.test.ts
 ├── test <rootDir>
 │   ├── setup.js
-│   ├── teardown.js 
+│   ├── teardown.js
 │   └── components
 │       └── compute.test.ts
 └── tsconfig.json (typescript project)
@@ -108,6 +108,10 @@ export default function () {
 }
 ```
 
+## Documentation
+
+* [see documentation](https://stephen-shopopop.github.io/node-test-runner/)
+
 ## Reference
 
-[Run node test](https://nodejs.org/api/test.html#runoptions)
+* [Run node test](https://nodejs.org/api/test.html#runoptions)
