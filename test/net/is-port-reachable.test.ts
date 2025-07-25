@@ -4,6 +4,8 @@ import { after, before, describe, it, type TestContext } from 'node:test';
 
 describe('isPortReachable', () => {
   it('Should return server not reachable', async (t: TestContext) => {
+    t.plan(1);
+
     // Act
     const value = await net.isPortReachable(9999);
 
@@ -12,6 +14,8 @@ describe('isPortReachable', () => {
   });
 
   it('Should return server reachable', async (t: TestContext) => {
+    t.plan(1);
+
     let server: Server;
 
     before(() => {

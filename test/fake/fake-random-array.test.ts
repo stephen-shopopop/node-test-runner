@@ -3,6 +3,8 @@ import { describe, it, type TestContext } from 'node:test';
 
 describe('Fake random array', () => {
   it('Should return first item of array', (t: TestContext) => {
+    t.plan(1);
+
     // Arrange
     const data = [1, 999];
 

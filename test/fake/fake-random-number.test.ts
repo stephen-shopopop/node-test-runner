@@ -3,6 +3,8 @@ import { describe, it, type TestContext } from 'node:test';
 
 describe('Fake random number', () => {
   it('Should return number float', (t: TestContext) => {
+    t.plan(2);
+
     // Arrange
     t.mock.method(global.Math, 'random').mock.mockImplementation(() => 0.123456789);
 
@@ -15,6 +17,8 @@ describe('Fake random number', () => {
   });
 
   it('Should return number integer', (t: TestContext) => {
+    t.plan(2);
+
     // Arrange
     t.mock.method(global.Math, 'random').mock.mockImplementation(() => 0.123456789);
 
@@ -27,6 +31,8 @@ describe('Fake random number', () => {
   });
 
   it('Should return min value, if min === max', (t: TestContext) => {
+    t.plan(1);
+
     // Arrange
     t.mock.method(global.Math, 'random').mock.mockImplementation(() => 0.123456789);
 
@@ -38,6 +44,8 @@ describe('Fake random number', () => {
   });
 
   it('Should return error, if min > max', (t: TestContext) => {
+    t.plan(1);
+
     // Arrange
     t.mock.method(global.Math, 'random').mock.mockImplementation(() => 0.123456789);
 

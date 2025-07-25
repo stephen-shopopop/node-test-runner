@@ -4,6 +4,8 @@ import { describe, it, type TestContext } from 'node:test';
 describe('Fake random text', () => {
   describe('randomChars', () => {
     it('Should return randomChars length 8 ', (t: TestContext) => {
+      t.plan(1);
+
       // Act
       const value = fake.text.randomChars();
 
@@ -12,6 +14,8 @@ describe('Fake random text', () => {
     });
 
     it('Should return randomChars length 12 ', (t: TestContext) => {
+      t.plan(1);
+
       // Arrange
       const len = 12;
       // Act
@@ -24,6 +28,8 @@ describe('Fake random text', () => {
 
   describe('randomBase32', () => {
     it('Should return randomChars length 8 ', (t: TestContext) => {
+      t.plan(1);
+
       // Act
       const value = fake.text.randomBase32();
 
@@ -32,6 +38,8 @@ describe('Fake random text', () => {
     });
 
     it('Should return randomChars length 12 ', (t: TestContext) => {
+      t.plan(1);
+
       // Arrange
       const len = 12;
       // Act

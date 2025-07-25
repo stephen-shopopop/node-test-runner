@@ -16,6 +16,8 @@ describe('createWebServer is reachable', async () => {
   const smoker = await new net.Smoker(0).start();
 
   test('When request on smoker then should return records', async (t: TestContext) => {
+    t.plan(3);
+
     // Arrange
     const method = 'GET';
     const path = '/';
@@ -56,6 +58,8 @@ describe('createWebServer is reachable', async () => {
   });
 
   test('When request on smoker then should return history', async (t: TestContext) => {
+    t.plan(2);
+
     // Arrange
     const address = smoker.getAddressInfo();
 
@@ -75,6 +79,8 @@ describe('createWebServer is reachable', async () => {
   });
 
   test('When multiple request on smoker then should return multiple history', async (t: TestContext) => {
+    t.plan(1);
+
     // Arrange
     const address = smoker.getAddressInfo();
 
@@ -94,6 +100,8 @@ describe('createWebServer is reachable', async () => {
   });
 
   test('When request on smoker then should return history by mock_id', async (t: TestContext) => {
+    t.plan(1);
+
     // Arrange
     const address = smoker.getAddressInfo();
 
@@ -120,6 +128,8 @@ describe('createWebServer is reachable', async () => {
   });
 
   test('When mock partial response then should return mock_id response', async (t: TestContext) => {
+    t.plan(3);
+
     // Arrange
     const address = smoker.getAddressInfo();
 
@@ -143,7 +153,9 @@ describe('createWebServer is reachable', async () => {
     t.assert.equal(body, 'Oops');
   });
 
-  test('When mock partial response then should return mock_id response', async (t: TestContext) => {
+  test('When mock response then should return mock_id response', async (t: TestContext) => {
+    t.plan(4);
+
     // Arrange
     const payload = { error: 'Oops' };
     const address = smoker.getAddressInfo();

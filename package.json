@@ -22,9 +22,25 @@
     "tbxts": "./bin/tbx"
   },
   "private": false,
+  "tsup": {
+    "entry": [
+      "src/index.ts"
+    ],
+    "splitting": false,
+    "sourcemap": false,
+    "clean": true,
+    "platform": "node",
+    "shims": true,
+    "format": [
+      "cjs",
+      "esm"
+    ],
+    "dts": true,
+    "minify": false
+  },
   "scripts": {
     "test": "tsc --pretty --noEmit && ./bin/tbx **/**/*.test.ts **/*.test.js -C",
-    "build": "pkgroll --clean-dist",
+    "build": "tsup-node",
     "lint": "biome lint .",
     "format": "biome lint --write . && biome format --write .",
     "check": "tsc --pretty --noEmit && npm run lint",
@@ -49,7 +65,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.1.1",
     "@types/node": "^24.1.0",
-    "pkgroll": "^2.14.3",
+    "tsup": "^8.5.0",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3"
   },
