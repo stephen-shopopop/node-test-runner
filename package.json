@@ -48,7 +48,9 @@
     "biome:migrate": "npx @biomejs/biome migrate --write",
     "tarball:check": "npm pack --dry-run",
     "publish:dry-run": "npm publish --dry-run",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "prepack": "npm run build",
+    "docs": "npx typedoc --tsconfig tsconfig.json --excludePrivate --excludeProtected --excludeExternals --entryPointStrategy expand ./src"
   },
   "keywords": [
     "test",
@@ -67,6 +69,7 @@
     "@types/node": "^24.1.0",
     "tsup": "^8.5.0",
     "tsx": "^4.20.3",
+    "typedoc": "^0.28.7",
     "typescript": "^5.8.3"
   },
   "simple-git-hooks": {
