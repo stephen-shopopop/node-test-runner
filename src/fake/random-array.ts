@@ -17,4 +17,8 @@ function getRandomFromArray<T>(data: T[]): T | undefined {
   return data.at(prng) as T;
 }
 
+/**
+ * Get random item from array
+ * This function selects a random item from the provided array.
+ */
 export const array = { getRandomFromArray };

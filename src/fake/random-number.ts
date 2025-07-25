@@ -35,4 +35,8 @@ function getRandomInRange({
   return Number((Math.random() * (max - min) + min).toFixed(fraction));
 }
 
+/**
+ * Get random number in range
+ * This function generates a random number within a specified range.
+ */
 export const num = { getRandomInRange };

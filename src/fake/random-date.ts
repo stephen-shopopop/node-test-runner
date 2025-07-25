@@ -32,4 +32,8 @@ function between({ from, to }: { from: string | Date | number; to: string | Date
   return new Date(num.getRandomInRange({ max: toInMs, min: fromInMs }));
 }
 
+/**
+ * Generates a random date between two specified dates.
+ * This function generates a random date between two specified dates.
+ */
 export const date = Object.freeze({ between });

@@ -69,4 +69,8 @@ function randomBase32(length = 8): string {
   return randomAlphabet(alphabet, length);
 }
 
+/**
+ * Generates a random string of characters from the base32 alphabet.
+ * This function generates a random string of characters from the base32 alphabet.
+ */
 export const text = { randomBase32, randomChars };
