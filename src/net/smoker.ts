@@ -18,7 +18,7 @@ type Mock = {
 
 type History = {
   mock_id: string;
-  request: Context & { datetime: number };
+  request: Omit<Context, 'body'> & { body: unknown; datetime: number };
   response?: Mock['response'];
 };
 
@@ -35,7 +35,7 @@ const buildResponse = (mock: Mock | undefined): Response => {
 
 export class Smoker {
   #history: History[];
-  #recorder: Map<string, Context & { datetime: number }>;
+  #recorder: Map<string, Omit<Context, 'body'> & { body: unknown; datetime: number }>;
   #mock: Map<string, Mock>;
   #server: Server | undefined;
   #address: AddressInfo | undefined;
@@ -46,7 +46,7 @@ export class Smoker {
     this.#history = [];
   }
 
-  #setRecord(identifier: string, ctx: Readonly<Context>): void {
+  #setRecord(identifier: string, ctx: Readonly<Omit<Context, 'body'> & { body: unknown }>): void {
     this.#recorder.set(identifier, { ...ctx, datetime: Date.now() });
   }
 
@@ -57,7 +57,7 @@ export class Smoker {
     return [...this.#recorder].flatMap(([id, request]) => [{ id, request }]);
   }
 
-  #setHistory(mockId: string, ctx: Readonly<Context>): void {
+  #setHistory(mockId: string, ctx: Readonly<Omit<Context, 'body'> & { body: unknown }>): void {
     this.#history.push({
       mock_id: mockId,
       request: { ...ctx, datetime: Date.now() },
@@ -99,12 +99,13 @@ export class Smoker {
 
   async #fetchCallback(ctx: Context): Promise<Response> {
     const pattern = this.#uniqueId(`${ctx.method}:${ctx.path}`);
+    const body = await ctx.body();
 
     if (this.#mock.has(pattern)) {
-      this.#setHistory(pattern, ctx);
+      this.#setHistory(pattern, { ...ctx, body });
     }
 
-    this.#setRecord(pattern, ctx);
+    this.#setRecord(pattern, { ...ctx, body });
 
     return buildResponse(this.#mock.get(pattern));
   }

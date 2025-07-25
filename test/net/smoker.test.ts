@@ -1,4 +1,5 @@
 import { net } from '#runner';
+import { createHash } from 'node:crypto';
 import test, { after, afterEach, describe, type TestContext } from 'node:test';
 
 describe('createWebServer is reachable', async () => {
@@ -16,15 +17,42 @@ describe('createWebServer is reachable', async () => {
 
   test('When request on smoker then should return records', async (t: TestContext) => {
     // Arrange
+    const method = 'GET';
+    const path = '/';
+
+    const fakeNow = 1700000000000; // Some timestamp
+    t.mock.method(Date, 'now', () => fakeNow);
+
+    const hash = createHash('sha1').update(`${method}:${path}`).digest('hex');
+
     const address = smoker.getAddressInfo();
+    const url = new URL(path, `http://localhost:${address?.port}`);
 
     // Act
-    const response = await fetch(`http://localhost:${address?.port}`);
+    const response = await fetch(url, { method });
 
     // Expect
     t.assert.equal(response.status, 200);
     t.assert.equal(smoker.getRecords().length, 1);
-    t.assert.ok(typeof smoker.getRecords().at(0)?.id === 'string');
+    t.assert.deepStrictEqual(smoker.getRecords().at(0), {
+      id: hash,
+      request: {
+        method,
+        headers: {
+          accept: '*/*',
+          'accept-encoding': 'gzip, deflate',
+          'accept-language': '*',
+          connection: 'keep-alive',
+          host: `localhost:${address?.port}`,
+          'sec-fetch-mode': 'cors',
+          'user-agent': 'node'
+        },
+        path,
+        query: {},
+        body: '',
+        datetime: fakeNow
+      }
+    });
   });
 
   test('When request on smoker then should return history', async (t: TestContext) => {
