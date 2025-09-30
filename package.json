@@ -45,7 +45,7 @@
     "format": "biome lint --write . && biome format --write .",
     "check": "tsc --pretty --noEmit && npm run lint",
     "maintenance": "rm -rf ./dist && find . -name 'node_modules' -type d -prune -exec rm -rf '{}' + && npm cache clean --force",
-    "biome:migrate": "npx @biomejs/biome migrate --write",
+    "biome:migrate": "npm install --save-dev --save-exact @biomejs/biome@latest && npx @biomejs/biome migrate --write",
     "tarball:check": "npm pack --dry-run",
     "publish:dry-run": "npm publish --dry-run",
     "prepublishOnly": "npm run build",
@@ -65,11 +65,11 @@
   ],
   "license": "ISC",
   "devDependencies": {
-    "@biomejs/biome": "2.1.1",
-    "@types/node": "^24.2.0",
+    "@biomejs/biome": "2.2.4",
+    "@types/node": "^24.6.0",
     "tsup": "^8.5.0",
-    "tsx": "^4.20.3",
-    "typedoc": "^0.28.9",
+    "tsx": "^4.20.6",
+    "typedoc": "^0.28.13",
     "typescript": "^5.9.2"
   },
   "simple-git-hooks": {
@@ -91,7 +91,7 @@
     "node": ">=20.17.0"
   },
   "dependencies": {
-    "@reporters/github": "^1.8.0"
+    "@reporters/github": "^1.11.0"
   },
   "imports": {
     "#runner/*": "./dist/index.js"
