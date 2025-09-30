@@ -1,16 +1,23 @@
-[tools.actionlint]
+[[tools.actionlint]]
 version = "1.7.7"
 backend = "aqua:rhysd/actionlint"
 
-[tools.node]
-version = "24.5.0"
+[[tools.lazygit]]
+version = "0.55.1"
+backend = "aqua:jesseduffield/lazygit"
+
+[[tools.neovim]]
+version = "0.11.4"
+backend = "aqua:neovim/neovim"
+
+[[tools.node]]
+version = "24.8.0"
 backend = "core:node"
 
-[tools.node.platforms.macos-arm64]
-checksum = "sha256:2a4172474565ecb8f0c87a1520590e00d6b28a78594c220d38eef991763dc276"
-size = 50983559
-url = "https://nodejs.org/dist/v24.5.0/node-v24.5.0-darwin-arm64.tar.gz"
-
-[tools."npm:@antfu/ni"]
+[[tools."npm:@antfu/ni"]]
 version = "25.0.0"
 backend = "npm:@antfu/ni"
+
+[[tools.ripgrep]]
+version = "14.1.1"
+backend = "aqua:BurntSushi/ripgrep"
