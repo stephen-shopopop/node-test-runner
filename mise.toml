@@ -36,6 +36,10 @@ run = 'actionlint && npm run check && npm test'
 description = 'Maintenance project'
 run = 'npm run maintenance && mise uninstall --all'
 
+[tasks.nvim-config]
+description = 'Install nvim config'
+run = 'git clone https://github.com/stephen-shopopop/neovim ~/.config/nvim'
+
 [tasks.info]
 description = "Print project information"
 run = '''
