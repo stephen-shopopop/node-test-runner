@@ -13,6 +13,7 @@ backend = "aqua:neovim/neovim"
 [[tools.node]]
 version = "24.8.0"
 backend = "core:node"
+"platforms.macos-x64" = { checksum = "sha256:6fd8496b59baa8f86a24e3eb03308b763091716ffc6b6e1094d1a5e5696dd6dd", url = "https://nodejs.org/dist/v24.8.0/node-v24.8.0-darwin-x64.tar.gz"}
 
 [[tools."npm:@antfu/ni"]]
 version = "25.0.0"
